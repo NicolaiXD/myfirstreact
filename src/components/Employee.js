@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import employeeService from "../services/employeeService"
 
 
@@ -7,41 +8,72 @@ const Employee = () => {
 
     useEffect(
         () => {
-            employeeService.getEmployees() //promise
-            .then(
-                response => {
-                    setEmployees(response.data)
-                }
-            )
-            .catch(
-                () => {
-                    console.log("suri na pasinsha na gudbliz")
-                }
-            )
+            refreshEmployeeTable();
         }
     )
+
+    const refreshEmployeeTable = () => {
+        employeeService.getEmployees() //promise
+        .then(
+            response => {
+                setEmployees(response.data)
+            }
+        )
+        .catch(
+            () => {
+                console.log("suri na pasinsha na gudbliz")
+            }
+        )
+    }
+
+    const deleteEmployee = (employeeId) => {
+        employeeService.deleteEmployee(employeeId)
+        .then(
+            response => {
+                console.log("deleted employee yay")
+            }
+        )
+        .catch(
+            error => {
+                console.error("something went wrong oh no!", error)
+            }
+        )
+    }
 
     return(
         <div>
             <h1>List of Employees</h1>
             <div>
-                <table border = "1">
-                    <tr>
-                        <td>Name</td>
-                        <td>Location</td>
-                        <td>Department</td>
-                    </tr>
+                <table className="table table-hover table-light table-striped">
+                    <thead> 
+                        <tr className="table-danger">
+                            <td>Name</td>
+                            <td>Location</td>
+                            <td>Department</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+
+                    <tbody> 
                     {
                         employees.map(
                             employee => (
-                                <tr>
+                                <tr key ={employee.employeeId}>
                                     <td>{employee.name}</td>
                                     <td>{employee.department}</td>
                                     <td>{employee.location}</td>
+                                    <td>
+                                        <div className = "d-grid gap-2 d-md-flex">
+                                            <Link className="btn btn-primary" to={`/employees/edit/${employee.employeeId}`}>Update</Link>
+                                            <button className="btn btn-danger" onClick={() =>deleteEmployee(employee.employeeId)} >Delete</button>
+                                        </div>
+                                    </td>
                                 </tr>
                             )
                         )
                     }
+                    </tbody>
+
                 </table>
             </div>
         </div>
