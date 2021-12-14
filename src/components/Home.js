@@ -1,4 +1,5 @@
 import logo from '../logo.svg';
+import '../App.css';
 import Greet from './Greet';
 import Message from './Message';
 import Button from './Button';
