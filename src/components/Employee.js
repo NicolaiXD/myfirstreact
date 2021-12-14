@@ -31,6 +31,7 @@ const Employee = () => {
         .then(
             response => {
                 console.log("deleted employee yay")
+                refreshEmployeeTable()
             }
         )
         .catch(
