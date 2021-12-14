@@ -1,5 +1,4 @@
 import logo from '../logo.svg';
-import '../App.css';
 import Greet from './Greet';
 import Message from './Message';
 import Button from './Button';
@@ -10,7 +9,6 @@ import NavBar from './NavBar';
 function Home() {
   return (
     <div className="Home">
-      <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -30,7 +28,6 @@ function Home() {
         >
           Learn React
         </a>
-      </header>
     </div>
   );
 }

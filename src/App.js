@@ -4,9 +4,11 @@ import Router from './components/Router';
 
 function App() {
   return (
-    <div className="App">
-      <NavBar/>
-      <Router/>
+      <div>
+        <NavBar/>
+        <div className="App">
+            <Router/>
+      </div>
     </div>
   );
 }
