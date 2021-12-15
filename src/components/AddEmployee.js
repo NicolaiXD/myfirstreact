@@ -9,45 +9,56 @@ const AddEmployee = () => {
     const [department, setDepartment] = useState("");
     const navigate = useNavigate();
     const {employeeId} = useParams();
+    const {error, setError} = useState('');
 
-    const saveEmployee = (e) => {
-        e.preventDefault();
+    if (name && location && department) {
+        setError('');
 
-        if(employeeId){
-            //update
-            const employee = {employeeId, name, location, department};
-            employeeService.putEmployee(employee) //promise
+        const saveEmployee = (e) => {
+            e.preventDefault();
     
-            .then(
-                response => {
-                    console.log("updated employee!", response.data)
-                    navigate("/myfirstreact/employees")
-                }
-            )
-            .catch(
-                error => {
-                    console.error("somethingwent wrong!")
-                })
-        }
-        else {
-            const employee = {name, location, department};
-            employeeService.postEmployee(employee) //promise
+            if(employeeId){
+                //update
+                const employee = {employeeId, name, location, department};
+                employeeService.putEmployee(employee) //promise
+        
+                .then(
+                    response => {
+                        console.log("updated employee!", response.data)
+                        navigate("/myfirstreact/employees")
+                    }
+                )
+                .catch(
+                    error => {
+                        console.error("somethingwent wrong!")
+                    })
+            }
+            else {
+                const employee = {name, location, department};
+                employeeService.postEmployee(employee) //promise
+        
+                .then(
+                    response => {
+                        console.log("added new employee!", response.data)
+                        navigate("/myfirstreact/employees")
+                    }
+                )
+                .catch(
+                    error => {
+                        console.error("somethingwent wrong!")
+                    }
+                )
+            }
     
-            .then(
-                response => {
-                    console.log("added new employee!", response.data)
-                    navigate("/myfirstreact/employees")
-                }
-            )
-            .catch(
-                error => {
-                    console.error("somethingwent wrong!")
-                }
-            )
+    
+    
         }
 
+    }
 
-
+    else {
+        console.error ('pls fill up each entry');
+        setError('fill up each entry');
     }
     
     useEffect(
@@ -121,6 +132,7 @@ const AddEmployee = () => {
                     />
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={(e) => saveEmployee(e)}>Save</button>
+                <p id = "error">{error && <p className="error">{error}</p>}</p>
             </form>
         </div>
     )
