@@ -9,13 +9,15 @@ const AddEmployee = () => {
     const [department, setDepartment] = useState("");
     const navigate = useNavigate();
     const {employeeId} = useParams();
-    const {error, setError} = useState('');
+    const [error, setError] = useState("");
 
-    if (name && location && department) {
-        setError('');
+    
+    const saveEmployee = (e) => {
+        e.preventDefault();
+        
+        if (name && location && department) {
+        setError("");
 
-        const saveEmployee = (e) => {
-            e.preventDefault();
     
             if(employeeId){
                 //update
@@ -53,13 +55,14 @@ const AddEmployee = () => {
     
     
         }
+        else {
+            console.error("pls fill up each entry");
+            setError("pls fill up each entry");
+        }
 
     }
 
-    else {
-        console.error ('pls fill up each entry');
-        setError('fill up each entry');
-    }
+
     
     useEffect(
         () =>{
@@ -132,7 +135,7 @@ const AddEmployee = () => {
                     />
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={(e) => saveEmployee(e)}>Save</button>
-                <p id = "error">{error && <p className="error">{error}</p>}</p>
+                <p id="error">{error && <p className="error">{error}</p>}</p>
             </form>
         </div>
     )
